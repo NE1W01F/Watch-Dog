@@ -18,7 +18,7 @@ namespace Watch_Dog.Tools
 		}
 
 		public static List<HistoryItem> GetInternetHistoryEdge()
-        {
+        	{
 			string edgedatafile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"Microsoft\Edge\User Data\Default\History";
 			List<HistoryItem> allHistoryItems = new List<HistoryItem>();
 
@@ -116,10 +116,9 @@ namespace Watch_Dog.Tools
 			adapter.Fill(dataset);
 
 			if (dataset != null && dataset.Tables.Count > 0 & dataset.Tables[0] != null)
-            {
+            		{
 				DataTable dt = dataset.Tables[0];
-				foreach(DataRow row in dt.Rows)
-                {
+				foreach(DataRow row in dt.Rows){
 					searches.Add(Convert.ToString(row["terms"]));
                 }
 			}
