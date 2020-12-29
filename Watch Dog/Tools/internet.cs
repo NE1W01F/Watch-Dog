@@ -101,9 +101,29 @@ namespace Watch_Dog.Tools
 			return allHistoryItems;
 		}
 
-		public static void GetSearchTerms()
+		public static List<string> GetSearchTermsEdge()
         {
+			List<string> searches = new List<string>();
+			string edgedatafile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"Microsoft\Edge\User Data\Default\History";
 
-        }
+			SQLiteConnection connection = new SQLiteConnection("Data Source=" + edgedatafile + ";Version=3;New=False;Compress=True;");
+
+			connection.Open();
+
+			DataSet dataset = new DataSet();
+
+			SQLiteDataAdapter adapter = new SQLiteDataAdapter("select * from keyword_search_terms", connection);
+			adapter.Fill(dataset);
+
+			if (dataset != null && dataset.Tables.Count > 0 & dataset.Tables[0] != null)
+            {
+				DataTable dt = dataset.Tables[0];
+				foreach(DataRow row in dt.Rows)
+                {
+					searches.Add(Convert.ToString(row["terms"]));
+                }
+			}
+			return searches;
+		}
     }
 }
